@@ -1,7 +1,57 @@
-.close {
+.main-content {
+  width: 75%;
+}
+
+.main-content ul {
+  width: 100%;
+  display: flex;
+  gap: .3rem;
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.main-content ul li {
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem .5rem .5rem .5rem;
+  background-color: rgb(5, 47, 84);
+  color: #FFF;
   cursor: pointer;
 }
+
+.main-content ul li span {
+  font-size: 20px;
+}
+
+.main-content ul li span:hover {
+  color: #F60;
+}
+
+.main-content .tab-content {
+	width: 45%;
+	padding: 1rem;
+}
+
+.main-content .tab-content .tab-content-main {
+	display: flex;
+	background-color: #f9f6f6;
+	padding: 1rem
+}
+
 .flex {
   display: flex;
   justify-content: space-between;
 }
+
+.page-content {
+	max-width: 700px;
+	background: #fff;
+}
+
+.tab-content {
+	display: none;
+	color: rgb(126, 126, 128);
+}
+

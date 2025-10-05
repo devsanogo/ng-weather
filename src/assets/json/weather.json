@@ -1,0 +1,44 @@
+{
+    "coord": {
+      "lon": 1235,
+      "lat": 797
+    },
+    "weather": [
+      {
+        "id": 1,
+        "main": "main",
+        "description": "test description",
+        "icon": "icon"
+      }
+    ],
+    "base": "",
+    "main": {
+      "temp": 50,
+      "feels_like": 10,
+      "temp_min": 30,
+      "temp_max": 70,
+      "pressure": 35,
+      "humidity": 75
+    },
+    "visibility": 11,
+    "wind": {
+      "speed": 200,
+      "deg":  40,
+      "gust":  21
+    },
+    "clouds": {
+      "all": 27
+    },
+    "dt": 5,
+    "sys": {
+      "type": 5,
+      "id": 9,
+      "country": "France",
+      "sunrise": 6,
+      "sunset":  18
+    },
+    "timezone": 2,
+    "id": 5,
+    "name": "salut",
+    "cod": 5
+}

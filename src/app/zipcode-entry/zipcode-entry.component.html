@@ -1,8 +1,24 @@
 <div class="well">
   <h2>Enter a zipcode:</h2>
-  <input type="text" #zipcode placeholder="Zipcode" class="form-control">
-  <br>
-  <button class="btn btn-primary" (click)="addLocation(zipcode.value)" >
-    Add location
-  </button>
+  <form novalidate (ngSubmit)="addLocation(zipForm)" #zipForm="ngForm">
+    <input
+      type="text"
+      name="zipcode"
+      required
+      ngModel
+      #zipcodeVar="ngModel"
+      placeholder="Zipcode"
+      class="form-control"
+      [ngClass]="{ 'is-invalid': zipcodeVar.touched && !zipcodeVar.valid }"
+    />
+    <div class="invalid-feedback">
+      <span *ngIf="zipcodeVar.errors?.['required']">
+        Please enter a Zipcode
+      </span>
+    </div>
+
+    <button class="btn btn-primary mt-4" type="submit" [disabled]="zipForm.invalid">
+      Add location
+    </button>
+  </form>
 </div>
