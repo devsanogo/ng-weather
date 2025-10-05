@@ -1,9 +1,10 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
     "baseUrl": "src",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    "strict": true,
     "declaration": false,
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -12,9 +13,13 @@
       "node_modules/@types"
     ],
     "lib": [
-      "es2016",
+      "ESNext",
       "dom"
     ],
+    "paths": {
+      "@environments/*" : ["./src/environments/*"],
+      "@app/*": ["./src/app/*"]
+    },
     "useDefineForClassFields": false
   }
 }

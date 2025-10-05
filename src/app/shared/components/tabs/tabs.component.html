@@ -1,0 +1,29 @@
+@if (titles?.length) {
+    <div class="page-content">	
+        <div class="tabbed">
+            @for (title of titles; track title; let idx = $index) {
+                <input
+                    type="radio"
+                    id="{{ 'tab' + idx }}"
+                    name="tabs-input"
+                    class="tabs-input"
+                    #tabInputRef
+                    (change)="selectTab($event, idx)"/>
+            }
+
+            <ul class="tabs">
+                @for (title of titles; track title; let idx = $index) {
+                    <li class="tab">
+                        <label for="{{ 'tab' + idx }}" #tabLabelRef>
+                            <span>{{ title }}</span>
+                            <span (click)="removeTab(idx, title)">&times;</span>
+                        </label>
+                    </li>
+                }
+            </ul>
+
+            <ng-content></ng-content>
+        </div>
+    </div>
+}
+

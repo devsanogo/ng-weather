@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import {LocationService} from "../location.service";
+import { Component, inject } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { LocationService } from 'app/core/services/locations/location.service';
 
 @Component({
   selector: 'app-zipcode-entry',
@@ -7,10 +8,11 @@ import {LocationService} from "../location.service";
 })
 export class ZipcodeEntryComponent {
 
-  constructor(private service : LocationService) { }
+  private readonly service = inject(LocationService);
 
-  addLocation(zipcode : string){
-    this.service.addLocation(zipcode);
+  addLocation(zipForm: NgForm): void {
+    this.service.addLocation(zipForm.value.zipcode);
+    zipForm.reset();
   }
 
 }
