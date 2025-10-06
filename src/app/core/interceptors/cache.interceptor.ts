@@ -1,13 +1,14 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
+import { ToastrService } from "ngx-toastr";
 import { CacheService } from "../services/cache/cache.service";
 
 @Injectable({
     providedIn: 'root',
 })
 export class CacheInterceptor implements HttpInterceptor {
-    constructor(private readonly cacheService: CacheService) {}
+    constructor(private readonly cacheService: CacheService, private toastr: ToastrService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (req.method === 'GET') {
@@ -44,6 +45,8 @@ export class CacheInterceptor implements HttpInterceptor {
                     this.cacheService.put(key, obs);
                 }
             }
+        }, (err) => {
+            this.toastr.error(err.error?.message || 'Error while fetching data', 'Alert !');
         })
 
         return observable;

@@ -14,24 +14,20 @@ export class LocationService {
     if (locString) {
       this.locations = JSON.parse(locString);
     }
-
-    for (let loc of this.locations) {
-      this.globalState.notifyDataCurrentConditions({ action: 'add', data: loc });
-    }
+    this.globalState.setLocations(this.locations);
   }
 
   addLocation(zipcode : string) {
     this.locations.push(zipcode);
-    localStorage.setItem(CONSTANTS.locations, JSON.stringify(this.locations));
     this.globalState.notifyDataCurrentConditions({ action: 'add', data: zipcode });
+    this.globalState.setLocations(this.locations);
   }
 
   removeLocation(zipcode : string) {
     let index = this.locations.indexOf(zipcode);
     if (index !== -1) {
       this.locations.splice(index, 1);
-      localStorage.setItem(CONSTANTS.locations, JSON.stringify(this.locations));
-      this.globalState.notifyDataCurrentConditions({ action: 'remove', data: zipcode });
+      this.globalState.setLocations(this.locations);
     }
 
     this.globalState.notifyDataCurrentConditions({ action: 'remove', data: zipcode });

@@ -6,6 +6,6 @@ import { ConditionsAndZip } from "app/core/models/conditions-and-zip.type";
 })
 export class TitleHelperPipe implements PipeTransform {
     transform(locations: ConditionsAndZip[]): string[] {
-        return locations.map(loc => `${loc.data.name } (${loc.zip })`);
+        return Array.from(new Set(locations.map(loc => `${loc.data.name } (${loc.zip })`)));
     }
 }
