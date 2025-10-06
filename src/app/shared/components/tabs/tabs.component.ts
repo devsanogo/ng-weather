@@ -39,7 +39,9 @@ export class TabsComponent implements AfterViewInit {
     }
 
     removeTab(idx: number, title: string): void {
-        const elementToRemove = title.split(' ')[1].replace(/[{()}]/g, '');
+        // const elementToRemove = title.split(' ')[1].replace(/[{()}]/g, '');
+        const locations = JSON.parse(localStorage.getItem('locations') as string);
+        const elementToRemove = locations[idx];
 
         this.tabInputRef.toArray()[idx].nativeElement.remove();
         this.tabLabelRef.toArray()[idx].nativeElement.remove();
@@ -47,21 +49,11 @@ export class TabsComponent implements AfterViewInit {
         this.initTabContent();
         this.resetLabelStyle(idx);
 
-        if (idx !== 0) {
+        if (idx > 0) {
             this.setTabInputChecked(idx - 1);
             this.resetLabelStyle(idx - 1);
             (this.document.querySelectorAll('.tab-content')[idx - 1] as HTMLElement).style.display = "block";
-        } else {
-            this.setTabInputChecked(idx);
-            this.resetLabelStyle(idx);
-            (this.document.querySelectorAll('.tab-content')[idx] as HTMLElement).style.display = "block";
         }
-
-        // if (idx !== 0) {
-        //     this.setTabInputChecked(idx - 1);
-        //     this.resetLabelStyle(idx - 1);
-        //     (this.document.querySelectorAll('.tab-content')[idx - 1] as HTMLElement).style.display = "block";
-        // }
 
         this.locationService.removeLocation(elementToRemove);
     }

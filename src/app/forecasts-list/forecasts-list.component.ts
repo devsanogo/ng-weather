@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { WeatherService } from 'app/core/services/weather/weather.service';
+import { WEATHER_TOKEN } from 'app/core/models/weather.interface';
 
 @Component({
   selector: 'app-forecasts-list',
@@ -10,6 +10,6 @@ import { WeatherService } from 'app/core/services/weather/weather.service';
 })
 export class ForecastsListComponent {  
   private readonly route = inject(ActivatedRoute);
-  private readonly weatherService = inject(WeatherService);
+  private readonly weatherService = inject(WEATHER_TOKEN);
   protected readonly forecast$ = this.route.params.pipe(switchMap((params) => this.weatherService.getForecast(params['zipcode'])));
 }
