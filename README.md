@@ -4,6 +4,15 @@ An app that showcases how to build a simple app with Angular (running on 14.x)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli).
 
+## Mocking
+You can start the server in mocked mode or in normal mode. To do this, please enable mocks from the environment.ts file.
+
+```bash
+export const environment = {
+  isMocked: true
+}
+```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

@@ -27,10 +27,10 @@ export class CacheService {
      * @return The cached data or null if no cached data exists for this request.
      */
     get<T>(url: string): Observable<unknown> {
-        const cacheEntry = JSON.parse(localStorage.getItem(url) as string);
-        if (cacheEntry) {
+        const cacheData = JSON.parse(localStorage.getItem(url) as string);
+        if (cacheData) {
             console.log(`Cache hit for key: "${url}"`);
-            return of(new HttpResponse({ body: cacheEntry.data.body }));
+            return of(new HttpResponse({ body: cacheData.data.body }));
         }
         return of((null as unknown) as T);
     }
@@ -46,7 +46,6 @@ export class CacheService {
 
     checkIfCacheIsExpired(key: string): boolean {
         const cache = JSON.parse(localStorage.getItem(key) as string);
-        console.log('TTL > ', new Date().getTime() - new Date(cache.lastUpdated).getTime());
         return new Date().getTime() - new Date(cache.lastUpdated).getTime() > environment.cacheDuration;
     }
 

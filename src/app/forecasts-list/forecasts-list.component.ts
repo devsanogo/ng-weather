@@ -10,6 +10,6 @@ import { WEATHER_TOKEN } from 'app/core/models/weather.interface';
 })
 export class ForecastsListComponent {  
   private readonly route = inject(ActivatedRoute);
-  private readonly weatherService = inject(WEATHER_TOKEN);
+  protected readonly weatherService = inject(WEATHER_TOKEN);
   protected readonly forecast$ = this.route.params.pipe(switchMap((params) => this.weatherService.getForecast(params['zipcode'])));
 }
