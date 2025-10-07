@@ -10,6 +10,7 @@ import { CONSTANTS } from 'app/core/models/constant';
 import { Forecast } from 'app/core/models/forecast.type';
 import { environment } from 'environments/environment';
 import { WeatherInterface } from 'app/core/models/weather.interface';
+import { __getIcon } from 'app/shared/utils';
 
 @Injectable()
 export class WeatherService implements WeatherInterface {
@@ -19,6 +20,7 @@ export class WeatherService implements WeatherInterface {
   public locations : string[] = [];
 
   constructor(private http: HttpClient) {
+    // Listen store and call addCurrentConditions() & removeCurrentConditions() when store is updated
     this.globalState.data.pipe(
       switchMap((value: currentConditionActionType) => value.action === 'add' ? this.addCurrentConditions(value.data) : this.removeCurrentConditions(value.data))
     ).subscribe()
@@ -45,9 +47,11 @@ export class WeatherService implements WeatherInterface {
         if (conditions[i].zip == zipcode)
           conditions.splice(+i, 1);
       }
+
       if (this.locations) {
         localStorage.setItem(CONSTANTS.locations, JSON.stringify(this.locations));
       }
+
       return conditions;
     })
 
@@ -60,47 +64,8 @@ export class WeatherService implements WeatherInterface {
     return this.http.get<Forecast>(`${url}`);
   }
 
-  private inRange(num: number, min: number, max: number): boolean {
-    return num >= min && num <= max;
-  }
-
   getWeatherIcon(id: number): string {
-
-    const iconWeatherMap = new Map([
-      [[200, 232], CONSTANTS.ICON_URL + "art_storm.png"],
-      [[501, 511], CONSTANTS.ICON_URL + "art_rain.png"],
-      [[520, 531], CONSTANTS.ICON_URL + "art_light_rain.png"],
-      [[600, 622], CONSTANTS.ICON_URL + "art_snow.png"],
-      [[801, 804], CONSTANTS.ICON_URL + "art_clouds.png"],
-      [[741, 761], CONSTANTS.ICON_URL + "art_fog.png"],
-    ])
-    let iconName = '';
-    // console.log('ID > ', id);
-
-    for (let [k, v] of iconWeatherMap.entries()) {
-      // console.log('ISR > ', this.inRange(id, k[0], k[1]))
-      if (this.inRange(id, k[0], k[1])) {
-        iconName = v;
-        // break;
-      }
-    }
-
-    // console.log('IC > ', iconName);
-
-    if (id >= 200 && id <= 232)
-      return CONSTANTS.ICON_URL + "art_storm.png";
-    else if (id >= 501 && id <= 511)
-      return CONSTANTS.ICON_URL + "art_rain.png";
-    else if (id === 500 || (id >= 520 && id <= 531))
-      return CONSTANTS.ICON_URL + "art_light_rain.png";
-    else if (id >= 600 && id <= 622)
-      return CONSTANTS.ICON_URL + "art_snow.png";
-    else if (id >= 801 && id <= 804)
-      return CONSTANTS.ICON_URL + "art_clouds.png";
-    else if (id === 741 || id === 761)
-      return CONSTANTS.ICON_URL + "art_fog.png";
-    else
-      return CONSTANTS.ICON_URL + "art_clear.png";
+    return __getIcon(id);
   }
 
 }

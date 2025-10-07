@@ -11,7 +11,7 @@ import { WEATHER_TOKEN } from 'app/core/models/weather.interface';
 export class CurrentConditionsComponent {
 
   private router = inject(Router);
-  private weatherService = inject(WEATHER_TOKEN);
+  protected weatherService = inject(WEATHER_TOKEN);
   protected currentConditionsByZip: Signal<ConditionsAndZip[]> = this.weatherService.currentConditions;
 
   showForecast(zipcode : string) {

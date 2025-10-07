@@ -25,29 +25,24 @@ export class TabsComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         this.setTabInputChecked(0);
         (<HTMLElement>this.document.querySelectorAll('.tab-content')[0]).style.display = "block";
-        this.tabLabelRef.toArray()[0].nativeElement.setAttribute('style', 'color: #000; background: #eee');
+        this.tabLabelRef.toArray()[0]?.nativeElement.setAttribute('style', 'color: #000; background: #eee');
     }
 
     selectTab(event: Event, idx: number): void {
         this.initTabContent();
-        (event.target as HTMLInputElement).setAttribute('checked', '');
-        this.resetLabelStyle(idx);
-
-        const currentTabClass = (event.target as HTMLInputElement).getAttribute('id') as string;
-        const currentTabContent = Array.from(this.document.querySelectorAll('.tab-content')).find(tab => tab.classList.contains(currentTabClass));
-        (currentTabContent as HTMLElement).style.display = "block";
+        this.resetLabelStyle(idx);   
+        (event.target as HTMLInputElement).setAttribute('checked', '');     
+        (this.document.querySelectorAll('.tab-content')[idx] as HTMLElement).style.display = "block";
     }
 
-    removeTab(idx: number, title: string): void {
-        // const elementToRemove = title.split(' ')[1].replace(/[{()}]/g, '');
+    removeTab(idx: number): void {
         const locations = JSON.parse(localStorage.getItem('locations') as string);
         const elementToRemove = locations[idx];
 
-        this.tabInputRef.toArray()[idx].nativeElement.remove();
-        this.tabLabelRef.toArray()[idx].nativeElement.remove();
+        this.tabInputRef.toArray()[idx]?.nativeElement.remove();
+        this.tabLabelRef.toArray()[idx]?.nativeElement.remove();
         this.document.querySelectorAll('.tab-content')[idx].remove();
         this.initTabContent();
-        this.resetLabelStyle(idx);
 
         if (idx > 0) {
             this.setTabInputChecked(idx - 1);
@@ -59,18 +54,18 @@ export class TabsComponent implements AfterViewInit {
     }
 
     private initTabContent(): void {
-        this.tabInputRef.toArray().forEach(inp => inp.nativeElement.removeAttribute('checked'));
-        this.document.querySelectorAll('.tab-content').forEach((tab: Element) => {
+        this.tabInputRef.toArray()?.forEach(inp => inp.nativeElement.removeAttribute('checked'));
+        this.document.querySelectorAll('.tab-content')?.forEach((tab: Element) => {
             (tab as HTMLElement).style.display = "none";   
         });
     }
 
     private resetLabelStyle(idx: number): void {
-        this.tabLabelRef.toArray().forEach((label) => label.nativeElement.setAttribute('style', 'color: #eee; background: rgb(95, 119, 160)'))
-        this.tabLabelRef.toArray()[idx].nativeElement.setAttribute('style', 'color: #000; background: #eee');
+        this.tabLabelRef.toArray()?.forEach((label) => label.nativeElement.setAttribute('style', 'color: #eee; background: rgb(95, 119, 160)'))
+        this.tabLabelRef.toArray()[idx]?.nativeElement.setAttribute('style', 'color: #000; background: #eee');
     }
 
     private setTabInputChecked(idx: number): void {
-        this.tabInputRef.toArray()[idx].nativeElement.setAttribute('checked', '');
+        this.tabInputRef.toArray()[idx]?.nativeElement.setAttribute('checked', '');
     }
 }

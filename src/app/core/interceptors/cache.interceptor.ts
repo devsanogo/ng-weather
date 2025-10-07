@@ -21,16 +21,20 @@ export class CacheInterceptor implements HttpInterceptor {
     }
 
     private cacheable<T>(returnObservable: () => Observable<T>, key: string): Observable<T> {
+
+        // Clear cache if cache is expired
         if (this.cacheService.hasKey(key) && this.cacheService.checkIfCacheIsExpired(key)) {
             this.cacheService.clearCache(key);
         }
 
+        // Return cached data if cache is not expired
         if (this.cacheService.hasKey(key) && !this.cacheService.checkIfCacheIsExpired(key)) {
             return this.cacheService.get(key) as Observable<T>;
         }
 
         const replay = new ReplaySubject<T>(1);
 
+        // makes request if cache is expired and store the new request data in cache
         returnObservable().subscribe(
             (x) => replay.next(x),
             (x) => replay.error(x),

@@ -18,7 +18,11 @@ export class LocationService {
   }
 
   addLocation(zipcode : string) {
-    this.locations.push(zipcode);
+    if (!this.locations.includes(zipcode)) {
+      this.locations.push(zipcode);
+    }
+
+    // Notify to add zipcode & locations in local store
     this.globalState.notifyDataCurrentConditions({ action: 'add', data: zipcode });
     this.globalState.setLocations(this.locations);
   }
@@ -30,6 +34,7 @@ export class LocationService {
       this.globalState.setLocations(this.locations);
     }
 
+    // Notify store to remove zipcode
     this.globalState.notifyDataCurrentConditions({ action: 'remove', data: zipcode });
   }
 }
